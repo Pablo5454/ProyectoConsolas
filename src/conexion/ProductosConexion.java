@@ -7,11 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import modelo.Usuario;
+import modelo.Producto;
 
-public class LoginConexion {
+public class ProductosConexion {
 
-	
 	public static Connection conexion() {
 		
 		Connection con = null;
@@ -22,36 +21,35 @@ public class LoginConexion {
 		try {
 			con = DriverManager.getConnection(URI, usuario, password);
 		} catch (Exception e) {
-			System.err.println("Error al importar datos de la BBDD.");
-		}
+			System.err.println("Error al conectar con la BBDD.");		}
 		
 		return con;
-		
 	}
 	
-	public static Usuario loginUsuario(String id){
+	public static ArrayList<Producto> verProductos(){
 		
 		Connection con = conexion();
+		ArrayList<Producto> listaProductos = new ArrayList<Producto>();
 		
-		ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
-		Usuario u = new Usuario();
-
 		try {
 			Statement st = con.createStatement();
-			String SQL = "SELECT * FROM clientes WHERE id = '"+id+"'";
-			ResultSet rs = st.executeQuery(SQL);
+			String sql = "SELECT * FROM productos";
+			ResultSet rs = st.executeQuery(sql);
 			while(rs.next()) {
-				u.setId(rs.getString(1));
-				u.setNombre(rs.getString(2));
-				u.setDireccion(rs.getString(3));
-				u.setCodPostal(rs.getString(4));
-				u.setTelefono(rs.getString(5));
+				Producto p = new Producto();
+				p.setId(rs.getInt(1));
+				p.setNombre(rs.getString(2));
+				p.setProveedor(rs.getString(3));
+				p.setPrecio(rs.getDouble(4));
+				p.setExistencias(rs.getInt(5));
 				
+				listaProductos.add(p);
 			}
 		} catch (SQLException e) {
-			System.err.println("Error al crear el statement loginUsuario");		
+			System.err.println("Error al crear el statement verProductos");		
 		}
 		
-		return u;
+		return listaProductos;
 	}
+		
 }
