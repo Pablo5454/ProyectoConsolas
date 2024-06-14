@@ -9,6 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import modelo.Usuario;
+
 public class VentanaLogin {
 
 	public static void main(String[] args) {
@@ -38,17 +40,7 @@ public class VentanaLogin {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String user = txtUsuario.getText();
-				if(usuario.instanceOf()) {
-					VentanaPrincipal.ventana(user);
-				}else if (user.equalsIgnoreCase("trabajador")) {
-					VentanaPrincipal.ventana(user);
-				}
-			}
-
-			private boolean instanceOf(String user) {
-				// TODO Auto-generated method stub
-				return false;
-			}
+			
 		});
 		
 		
